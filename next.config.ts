@@ -19,6 +19,8 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   typedRoutes: true,
   poweredByHeader: false,
+  // the docker image runs the traced server alone, without the project's node_modules; only its build asks for that, next start warning that it does not serve a standalone build
+  output: process.env.BUILD_STANDALONE === '1' ? 'standalone' : undefined,
 
   headers() {
     return Promise.resolve([

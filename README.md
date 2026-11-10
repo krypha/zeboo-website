@@ -102,9 +102,33 @@ Both origins must be **bare**: `env.ts` strips a trailing slash and refuses a pa
 
 ## Deploying
 
-The site is built and served like the web app: Dokploy builds it from this repository and runs `pnpm start`, which listens on **3003**, the port the zeboo.mg domain points at. The production values are `NEXT_PUBLIC_SITE_URL=https://zeboo.mg` and `NEXT_PUBLIC_APP_URL=https://app.zeboo.mg`, set for the build. An APK is posted with `pnpm app:android` before that build.
+The site ships as the image the `Dockerfile` builds, which is what Dokploy runs. Three stages: dependencies installed with the pinned pnpm, then `next build` with `BUILD_STANDALONE=1`, which only the image asks for, since `next start` warns that it does not serve a standalone build; then a runner holding the traced server alone, `node server.js` as the `node` user on **3003**, with a healthcheck on `/robots.txt`.
 
-The share cards read `src/assets/fonts/` at build time only, the two OFL fonts Bricolage Grotesque and Figtree with their licences beside them; the page's own fonts come from `next/font`, downloaded during the build and served from this origin.
+**Every address is a build argument, not a runtime variable.** Next writes the `NEXT_PUBLIC_` values into the pages while it builds them, so setting them on the running container changes nothing; the container itself needs no variable at all. A build that lacks one stops on a `ZodError` naming it.
+
+| Build argument             | Production               | Notes                                                                  |
+| -------------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`     | `https://zeboo.mg`       | Required. The wip stack gives its own address                          |
+| `NEXT_PUBLIC_APP_URL`      | `https://app.zeboo.mg`   | Required. The wip stack points at the wip web app                      |
+| `GOOGLE_SITE_VERIFICATION` | the Search Console token | Optional                                                               |
+| `ANDROID_APK_URL`          | a direct link to the apk | Optional. Downloaded during the build and posted with `app:android`    |
+| `ANDROID_APK_VERSION`      | `0.0.2`                  | Required with the URL, since the image has no `zeboo-mobile` beside it |
+
+In Dokploy, the application points at this repository (`main` for production, `develop` for wip), with **Dockerfile** as its build type, `Dockerfile` at the root and `.` as the context. The arguments above go in the build arguments of its environment, not in its runtime variables, and the domain `zeboo.mg` points at container port **3003**, with HTTPS from Let's Encrypt. A new APK means setting the two `ANDROID_APK_` arguments and redeploying, the band being decided at build time.
+
+The same image, built and run by hand:
+
+```bash
+docker build -t zeboo-site \
+  --build-arg NEXT_PUBLIC_SITE_URL=https://zeboo.mg \
+  --build-arg NEXT_PUBLIC_APP_URL=https://app.zeboo.mg \
+  .
+docker run -p 3003:3003 zeboo-site
+```
+
+Measured on a local build (arm64, Docker Desktop) with a 3 MB stand-in APK fetched through `ANDROID_APK_URL`: built in 1 min 17, reported at 310 MB by `docker image ls`; the root answered `307` to `/fr`, the page carried the download button with its version and size, `/app/zeboo.apk` came back whole with its two headers, `/fr/og.png` as a 62 kB PNG, the security headers were there, the process ran as `node`, and the healthcheck read healthy. The VPS builds for its own architecture, which this machine did not test.
+
+The build needs the network: corepack fetches pnpm, pnpm the packages, and `next/font` downloads both families, which the site then serves from its own origin. The share cards read `src/assets/fonts/`, the two OFL fonts with their licences beside them, and the trace copies them into the image.
 
 ## Scripts
 
@@ -140,6 +164,7 @@ src/
   proxy.ts             next-intl alone: nothing here is guarded
 test/                  the Playwright specs
 scripts/install-android.mjs
+Dockerfile             the image Dokploy runs, with its .dockerignore
 ```
 
 **Copies, not a shared package.** As everywhere in Zeboo, code that two repositories need is copied at the same path with its spec, so a `diff` across repositories says whether a copy has drifted: `budget.ts`, `money/format.ts`, `colour/colour.ts`, `zeboo-icons.tsx`, the `ui/` primitives, `brand`, `skip-link`, `locale-switcher`, `appearance-toggle`, `theme-colour`, `globals.css` and `dark-palette.spec.ts` come from `zeboo-frontend`. Three copies differ on purpose: `src/i18n/request.ts` (the explicit locale, above), `src/config/env.ts` (this site's variables) and `src/lib/brand/charter.ts`, which carries four more charter tones for the share card, each checked against `globals.css` by its spec. The contract shapes the engine reads, `features/itineraries/api/itineraries.types.ts` and `features/places/api/places.types.ts`, are transcribed by hand from the web app's generated `schema.d.ts`, since this site has no API contract of its own.
