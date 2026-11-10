@@ -1,93 +1,174 @@
 # zeboo-site
 
+The public site of Zeboo, served on **zeboo.mg**: one landing page in French and in English, built ahead of time with [Next.js](https://nextjs.org) 16 App Router, React 19 and [Tailwind CSS](https://tailwindcss.com) 4. The planner itself is `zeboo-frontend`, on app.zeboo.mg: every "sign in" and "sign up" here is a plain link to it.
 
+The site calls no API. Its one piece of arithmetic, the budget counter, runs the product's own engine in the browser on a fixed RN7 scenario.
 
-## Getting started
+## Prerequisites
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+| Tool    | Version          | Notes                                                                                                                           |
+| ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Node.js | 22.22.2 or newer | `jsdom` 30, used by the test runner, declares `^22.22.2 \|\| ^24.15.0 \|\| >=26.0.0`, the binding constraint, as on the web app |
+| pnpm    | 10.33.0          | Pinned by `packageManager`, so `corepack enable` is enough                                                                      |
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Nothing else needs to run: neither the backend nor the web app.
 
-## Add your files
+## Quick start
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+> **Copy the env file first.** `src/config/env.ts` validates the environment with [zod](https://zod.dev) when it is imported, and `next.config.ts` imports it for that side effect alone, so `pnpm start:dev` and `pnpm build` stop with a `ZodError` naming the missing variable.
+
+```bash
+cp .env.example .env
+pnpm install
+pnpm start:dev
+```
+
+Then open <http://localhost:3003>. The root never renders: it redirects to French, whatever the browser asks for.
+
+```bash
+curl -I localhost:3003
+# HTTP/1.1 307 Temporary Redirect
+# location: /fr
+```
+
+| Port | Service                                                           |
+| ---- | ----------------------------------------------------------------- |
+| 3003 | This site (`next dev` / `next start`)                             |
+| 3004 | The production build the end-to-end suite runs against            |
+| 3001 | `zeboo-frontend`, which the doors open onto with the local `.env` |
+| 3000 | `zeboo-backend`, which this site never calls                      |
+
+## What the page carries
+
+Twelve bands, every one a server component except the budget counter: the hero with its drawn Madagascar (one SVG and three CSS keyframes, held still under `prefers-reduced-motion`), the figures, the three steps, the living budget, composing a trip, discovering places, transport, the driving mode, the two doors for agencies and providers, the promises, the questions and the download band.
+
+The budget counter calls `budgetOf` from `src/features/itineraries/budget.ts`, the engine the web app and the phone use, and gives back 615 936 Ar for one traveller, 699 736 for two (349 868 each) and 867 336 for four (216 834 each): 689 km of road at 8 L/100 km and 5 300 Ar a litre, shared, five nights shared, meals and the Isalo entry paid per head. `src/features/landing/budget-scenario.spec.ts` holds those figures.
+
+The header is the same at every visit. The session lives in an httpOnly cookie on app.zeboo.mg, which this origin cannot read, so both doors are always drawn and the app decides what an account already signed in sees.
+
+## Search engines and sharing
+
+Everything is decided at build time: `/fr`, `/en`, both share images, the sitemap, `robots.txt` and the manifest are prerendered, and `next start` serves them with the root redirect and the headers.
+
+| What                   | Where                                                                           | Emitted                                                                                          |
+| ---------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Title and description  | `seo` in `src/messages/*.json`                                                  | `<title>… · Zeboo</title>`, `meta description`, one per language                                 |
+| Canonical and hreflang | `src/lib/seo/alternates.ts`                                                     | `canonical` to the page itself, `alternate` for `fr`, `en` and `x-default` (French)              |
+| Open Graph and X cards | `src/app/[locale]/page.tsx`                                                     | `og:*` with `fr_FR` / `en_US` and the other as alternate, `summary_large_image`                  |
+| Share image            | `src/app/[locale]/og.png/route.tsx`                                             | `/fr/og.png` and `/en/og.png`, 1200 by 630, with a translated alt                                |
+| Indexing               | `src/app/[locale]/page.tsx`, `robots.ts`                                        | `index, follow`, `max-image-preview:large`; `robots.txt` allows everything and names the sitemap |
+| Sitemap                | `src/app/sitemap.ts`                                                            | both pages, each with its `xhtml:link` alternates, dated by the build                            |
+| Structured data        | `src/lib/seo/structured-data.ts`                                                | one JSON-LD graph: `Organization`, `WebSite`, `WebPage`, `SoftwareApplication`, `FAQPage`        |
+| Icons and manifest     | `src/app/{favicon.ico,icon.svg,apple-icon.png}`, `manifest.ts`, `public/icons/` | 16 to 512 pixels, all from the brand mark                                                        |
+| Search console         | `GOOGLE_SITE_VERIFICATION`                                                      | `google-site-verification`, only when the variable is set                                        |
+
+The FAQ in the structured data is read from the same catalogue entries the questions band draws, so what a crawler is told is what a visitor reads, word for word; an end-to-end test compares the two. The graph states no price anywhere, the page itself never giving a firm one. `SoftwareApplication` names Krypha LTD as its `creator`, the technology partner that designed and built the platform, and Zeboo as its publisher.
+
+Two limits that come from Google and not from the markup: FAQ rich results have been shown only for well-known government and health sites since August 2023, and a software rich result asks for a price and a rating, which this page deliberately does not state. The markup still describes the page; it will not turn into a rich snippet.
+
+Four things were measured rather than assumed, each of which cost time:
+
+- **The layout's title template does not reach this page.** A template applies to the segments below the layout, and the landing shares the `[locale]` segment with it, so the page sets an absolute title with the brand appended.
+- **The `opengraph-image` convention never prerenders here.** Its handler is a route handler, which does not inherit the layout's `generateStaticParams`, so it was drawn on the first request instead; and its `generateImageMetadata` is called with empty params while the build lists the images, where next-intl finds no request to read and the build stops. The card is therefore an ordinary route, `og.png/route.tsx`, `force-static` with its own `generateStaticParams`, announced by `generateMetadata`, which also lets its alt follow the language. Drawing it at build time means a broken card fails the build instead of a share.
+- **`src/i18n/request.ts` prefers the locale it is handed.** `getTranslations({ locale })` passes that locale to the request config, and reading the segment instead touches the request headers, which a build refuses.
+- **A 404 is drawn in the browser.** For `notFound()` raised by the catch-all page, Next answers `404` with `noindex` and an empty `__next_error__` shell, then renders the translated page from its payload, and the title stays `Zeboo`. The web app behaves the same way, measured on its own build.
+
+Lighthouse 12.8.2 on the production build, both languages: SEO 100, best practices 100, accessibility 96, performance 95. Two accessibility findings are left, both inherited from the landing as it was. Contrast: the charter's amber `oo` of the footer wordmark on sand (1.89 to 1), and three small notes set at 70 or 80 % opacity on the green bands, the road band's `Vers l’Isalo · environ 11 h` (3.84) and the download band's two `bientôt` lines (3.35). And the language button, whose accessible name `Langue` does not contain the `FR` it shows; the switcher is a copy shared with the web app, better fixed in both at once.
+
+## Handing out the Android build
+
+The site serves the APK itself at `/app/zeboo.apk`, since there is no Play Store listing yet. The binary is **not committed**: it weighs tens of megabytes and a new one lands at every release, so `public/app/` is gitignored except for its `.gitkeep`, and the file is posted before the build.
+
+```bash
+pnpm app:android ../zeboo-mobile/build/zeboo.apk      # version read from the sibling repo
+pnpm app:android ./zeboo.apk --version=0.0.2          # or stated outright
+```
+
+The script copies the file to `public/app/zeboo.apk` and writes `public/app/zeboo.json` beside it with the version and the date. `src/features/landing/android-build.ts` reads both **while the page is built**, and the download band has exactly two states: a real button carrying the version and the size, with a line warning that Android will ask permission to install from this source; or the plain statement that the build is coming, with no link at all. What it never shows is a button leading nowhere, and `test/landing.e2e-spec.ts` asserts both states. Since the page is prerendered, **a newly posted APK appears only after the next build**.
+
+`next.config.ts` answers the file with `Content-Type: application/vnd.android.package-archive` and `Content-Disposition: attachment`, so a browser saves it rather than guessing.
+
+## Environment variables
+
+`.env` is **not** committed; `.env.example` is, and lists every variable.
+
+| Variable                   | Example                 | Purpose                                                                       |
+| -------------------------- | ----------------------- | ----------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`     | `http://localhost:3003` | Public origin of this site: canonical urls, hreflang, sitemap, share cards    |
+| `NEXT_PUBLIC_APP_URL`      | `http://localhost:3001` | The web app the doors open onto, followed by `/{locale}/login` or `/register` |
+| `GOOGLE_SITE_VERIFICATION` | empty                   | The Search Console token, written in the head only when set                   |
+
+Both origins must be **bare**: `env.ts` strips a trailing slash and refuses a path, since the code joins each one to a path of its own. Both `NEXT_PUBLIC_` variables are inlined at build time, so a change needs a new build, and nothing secret belongs in them. `src/config/env.ts` hands the schema an object built key by key, because Next only replaces literal `process.env.NEXT_PUBLIC_X` reads.
+
+## Deploying
+
+The site is built and served like the web app: Dokploy builds it from this repository and runs `pnpm start`, which listens on **3003**, the port the zeboo.mg domain points at. The production values are `NEXT_PUBLIC_SITE_URL=https://zeboo.mg` and `NEXT_PUBLIC_APP_URL=https://app.zeboo.mg`, set for the build. An APK is posted with `pnpm app:android` before that build.
+
+The share cards read `src/assets/fonts/` at build time only, the two OFL fonts Bricolage Grotesque and Figtree with their licences beside them; the page's own fonts come from `next/font`, downloaded during the build and served from this origin.
+
+## Scripts
+
+| Script                     | Description                                    |
+| -------------------------- | ---------------------------------------------- |
+| `pnpm start:dev`           | Dev server with hot reload on port 3003        |
+| `pnpm build`               | Production build, both languages prerendered   |
+| `pnpm start`               | Serve the production build on port 3003        |
+| `pnpm type-check`          | `next typegen && tsc --noEmit`                 |
+| `pnpm lint` · `lint:fix`   | ESLint over the whole project, then with fixes |
+| `pnpm format`              | Prettier, writing in place                     |
+| `pnpm test` · `test:watch` | Vitest, the specs beside the code              |
+| `pnpm test:e2e`            | Playwright against a production build on 3004  |
+| `pnpm app:android <apk>`   | Post an Android build into `public/app/`       |
+
+`next typegen` is not optional: `PageProps`, `LayoutProps` and `RouteContext` are globals Next generates into `.next/types`, and on a fresh clone `tsc` alone cannot find them.
+
+## Project structure
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/zeboo/zeboo-site.git
-git branch -M main
-git push -uf origin main
+src/
+  app/
+    [locale]/          layout (fonts, metadata base, header, footer), page, error, not-found, catch-all, og.png
+    globals.css        the design tokens, the only place a colour is written
+    manifest.ts  robots.ts  sitemap.ts  favicon.ico  icon.svg  apple-icon.png  global-error.tsx
+  components/          header, footer, brand, locale and appearance menus, json-ld, the vendored ui primitives
+  config/env.ts        the validated environment
+  features/landing/    the twelve bands, the budget scenario, the android build reader
+  features/itineraries/budget.ts   the budget engine, with the two contract shapes it reads
+  i18n/                routing, request config, navigation
+  lib/                 brand constants, colour, money, seo, app links
+  messages/            fr.json and en.json
+  proxy.ts             next-intl alone: nothing here is guarded
+test/                  the Playwright specs
+scripts/install-android.mjs
 ```
 
-## Integrate with your tools
+**Copies, not a shared package.** As everywhere in Zeboo, code that two repositories need is copied at the same path with its spec, so a `diff` across repositories says whether a copy has drifted: `budget.ts`, `money/format.ts`, `colour/colour.ts`, `zeboo-icons.tsx`, the `ui/` primitives, `brand`, `skip-link`, `locale-switcher`, `appearance-toggle`, `theme-colour`, `globals.css` and `dark-palette.spec.ts` come from `zeboo-frontend`. Three copies differ on purpose: `src/i18n/request.ts` (the explicit locale, above), `src/config/env.ts` (this site's variables) and `src/lib/brand/charter.ts`, which carries four more charter tones for the share card, each checked against `globals.css` by its spec. The contract shapes the engine reads, `features/itineraries/api/itineraries.types.ts` and `features/places/api/places.types.ts`, are transcribed by hand from the web app's generated `schema.d.ts`, since this site has no API contract of its own.
 
-* [Set up project integrations](https://gitlab.com/zeboo/zeboo-site/-/settings/integrations)
+## Design system
 
-## Collaborate with your team
+Tailwind 4 is configured in CSS, with no `tailwind.config.js`: every token lives in `@theme` inside `src/app/globals.css`, and **no colour literal belongs anywhere else**. The values that must exist outside a stylesheet, for the manifest, the favicon and the share card, are in `src/lib/brand/charter.ts`, whose spec fails if any of them drifts from the tokens. The dark palette is derived from the charter green, never invented, and `src/app/dark-palette.spec.ts` replays that derivation. The appearance defaults to **light**, whatever the device says, under the key `zeboo.appearance`.
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## Testing
 
-## Test and Deploy
+`pnpm test` runs the specs beside the code: the budget engine and the RN7 scenario, the money format, the charter and the dark palette, the environment, the app links, the hreflang alternates, the structured data and the Android build reader.
 
-Use the built-in continuous integration in GitLab.
+`pnpm test:e2e` builds the site with `NEXT_PUBLIC_APP_URL=https://app.example.test`, so every door is asserted against an address no one could mistake for a real one, and serves it on 3004:
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+- `landing.e2e-spec.ts`: each door in both languages, the download band in its two states, the budget stepper, the drawn hero and its stillness under reduced motion, the skip link, and a visit that asks nothing of any other origin;
+- `i18n.e2e-spec.ts`: the root redirect for French, English and German browsers and its `307`, the language menu and the footer links, light by default on a dark device, the English labels, and the translated 404 with its `noindex`;
+- `seo.e2e-spec.ts`: per language, one `h1`, the title, the description, the canonical and the three alternates, the indexing directives, the share card and its PNG, the structured data against the visible questions, the page read with JavaScript off; then `robots.txt`, the sitemap, the manifest and its icons, and the security headers.
 
-***
+It runs on a production build, not `next dev`, because what a crawler reads is the prerendered page, and because the dev server answers a 404 with `200` once streaming has started. The build it leaves in `.next` carries the test addresses, so run `pnpm build` again before `pnpm start`.
 
-# Editing this README
+## Code quality and commits
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Husky runs `lint-staged` on `pre-commit` (ESLint then Prettier on the staged files) and `commitlint` on `commit-msg`: commits follow [Conventional Commits](https://www.conventionalcommits.org). ESLint is type-aware, so run `pnpm type-check` once on a fresh clone. `next dev` writes an `AGENTS.md` and a `CLAUDE.md` at the root on every run; both are gitignored.
 
-## Suggestions for a good README
+## Troubleshooting
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+| Symptom                                      | Cause                                               | Fix                                     |
+| -------------------------------------------- | --------------------------------------------------- | --------------------------------------- |
+| `ZodError` at startup or during `pnpm build` | No `.env`, or a variable missing or carrying a path | `cp .env.example .env`                  |
+| `Cannot find name 'LayoutProps'`             | Route types were never generated                    | `pnpm type-check`                       |
+| A posted APK does not show on the page       | The page was built before the file was posted       | `pnpm build` again                      |
+| `pnpm test:e2e` cannot launch a browser      | Playwright's Chromium is not installed              | `pnpm exec playwright install chromium` |

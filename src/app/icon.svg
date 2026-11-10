@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- the house mark, drawn with the charter's own values because a favicon resolves no css variable; src/lib/brand/charter.spec.ts asserts these two are the tokens of globals.css -->
+  <rect x="4" y="4" width="112" height="112" rx="30" fill="#17694a"/>
+  <path d="M46 40 C35 30 26 24 19 22 C25 32 33 40 44 49 Z" fill="#efa130"/>
+  <path d="M74 40 C85 30 94 24 101 22 C95 32 87 40 76 49 Z" fill="#efa130"/>
+  <circle cx="46" cy="64" r="6.4" fill="#fbf7ef"/>
+  <circle cx="74" cy="64" r="6.4" fill="#fbf7ef"/>
+  <rect x="40" y="82" width="40" height="24" rx="12" fill="#fbf7ef"/>
+  <circle cx="52" cy="94" r="3.4" fill="#17694a"/>
+  <circle cx="68" cy="94" r="3.4" fill="#17694a"/>
+</svg>

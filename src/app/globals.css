@@ -1,0 +1,280 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-bricolage);
+  --font-sans: var(--font-figtree);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-surface-raised: var(--surface-raised);
+  --color-raised-edge: var(--raised-edge);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-light: var(--primary-light);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-ink: var(--destructive-ink);
+  /* the four things that never follow the mode: the brand mark, the itinerary trail, the night veil and a generated place cover */
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-amber: var(--brand-amber);
+  --color-brand-ivory: var(--brand-ivory);
+  --color-itinerary: var(--itinerary);
+  --color-deep: var(--deep);
+  --color-deep-light: var(--deep-light);
+  --color-deep-foreground: var(--deep-foreground);
+  --color-deep-accent: var(--deep-accent);
+  --color-placeholder: var(--placeholder);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* what the floating bar occupies at the foot of a phone, and the room every screen under the signed in shell gives it back */
+  --tab-bar-height: 4.5rem;
+  --tab-bar-space: 6.5rem;
+  color-scheme: light;
+  --background: #fbf7ef;
+  --foreground: #241d17;
+
+  /* white on ivory, which is what the app actually draws: sand is the secondary surface, not the card */
+  --card: #ffffff;
+  --card-foreground: #241d17;
+
+  --popover: #ffffff;
+  --popover-foreground: #241d17;
+
+  --primary: #17694a;
+  --primary-foreground: #fbf7ef;
+  --primary-light: #2e8b63;
+  --primary-soft: #e1f5ee;
+
+  --secondary: #efe7d6;
+  --secondary-foreground: #241d17;
+
+  /* the sand ground a muted block sits on, and the ink that reads on it; these were the same colour, which is why eleven components wrote 6b6154 by hand */
+  --muted: #efe7d6;
+  --muted-foreground: #6b6154;
+  --placeholder: #a79e8e;
+
+  --accent: #efa130;
+  --accent-foreground: #241d17;
+  --accent-soft: #fbe5c4;
+  /* amber at four to one against its own soft ground, which amber itself never reaches */
+  --accent-ink: #8a5a08;
+
+  --destructive: #c4432a;
+  --destructive-soft: #f7e4de;
+  --destructive-ink: #ba3920;
+
+  --border: #e6dfd0;
+  --input: #e6dfd0;
+  --ring: #17694a;
+
+  /* a floating surface and its edge: the edge is invisible in the light mode, where a shadow does the work */
+  --surface-raised: #ffffff;
+  --raised-edge: #fbf7ef00;
+
+  /* the green panel ground the charter reserves for structure */
+  --brand-green: #17694a;
+  --brand-green-light: #2e8b63;
+  --brand-amber: #efa130;
+  --brand-ivory: #fbf7ef;
+  --itinerary: #c4432a;
+  --deep: #17694a;
+  --deep-light: #2e8b63;
+  --deep-foreground: #fbf7ef;
+  /* the amber walked until it reads on the green panel, which is a dark surface whatever the mode: the charter amber measures 3.1 to 1 on the light mode's green */
+  --deep-accent: #fdce96;
+
+  --chart-1: #17694a;
+  --chart-2: #efa130;
+  --chart-3: #c4432a;
+  --chart-4: #241d17;
+  --chart-5: #efe7d6;
+
+  --radius: 0.625rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #241d17;
+  --sidebar-primary: #17694a;
+  --sidebar-primary-foreground: #fbf7ef;
+  --sidebar-accent: #e1f5ee;
+  --sidebar-accent-foreground: #17694a;
+  --sidebar-border: #e6dfd0;
+  --sidebar-ring: #17694a;
+}
+
+/* derived, never invented: these are the values src/theme/colour.ts of the mobile produces by
+   walking the forest green's lightness in oklch until each tone meets wcag against its ground.
+   dark-palette.spec.ts replays that derivation and fails if a value here has drifted from it. */
+.dark {
+  color-scheme: dark;
+  --background: #05150e;
+  --foreground: #eff5f2;
+
+  --card: #0c1e15;
+  --card-foreground: #eff5f2;
+
+  --popover: #0c1e15;
+  --popover-foreground: #eff5f2;
+
+  --primary: #65b18e;
+  --primary-foreground: #05150e;
+  --primary-light: #79c4a0;
+  --primary-soft: #65b18e24;
+
+  --secondary: #162920;
+  --secondary-foreground: #eff5f2;
+
+  --muted: #162920;
+  --muted-foreground: #99a19c;
+  --placeholder: #6c7470;
+
+  /* amber still means money and clay still the itinerary, so neither hue follows the mode */
+  --accent: #efa130;
+  --accent-foreground: #241d17;
+  --accent-soft: #efa13029;
+  --accent-ink: #f2c26b;
+
+  --destructive: #f08a73;
+  --destructive-soft: #c4432a33;
+  --destructive-ink: #f8a994;
+
+  --border: #1e3027;
+  --input: #1e3027;
+  --ring: #65b18e;
+
+  /* a shadow says nothing on a dark ground, so what lifts a surface here is a real hairline */
+  --surface-raised: #0b2419;
+  --raised-edge: #304239;
+
+  --deep: #004931;
+  --deep-light: #0a553a;
+  --deep-foreground: #eff5f2;
+  --deep-accent: #efa130;
+
+  --chart-1: #65b18e;
+  --chart-2: #efa130;
+  --chart-3: #f08a73;
+  --chart-4: #eff5f2;
+  --chart-5: #162920;
+
+  --sidebar: #0c1e15;
+  --sidebar-foreground: #eff5f2;
+  --sidebar-primary: #65b18e;
+  --sidebar-primary-foreground: #05150e;
+  --sidebar-accent: #65b18e24;
+  --sidebar-accent-foreground: #65b18e;
+  --sidebar-border: #1e3027;
+  --sidebar-ring: #65b18e;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* the hero's madagascar backdrop: layered highlands, baobabs, the rn7 trail and a low sun, moving slowly enough that the page still reads as calm */
+@keyframes zeboo-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--drift), 0, 0);
+  }
+}
+
+/* the sun breathes on its halo alone, which needs no transform origin and so cannot shift the composition */
+@keyframes zeboo-glow {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+/* the dashes travel along the road rather than the road drawing itself, which is what reads as going somewhere */
+@keyframes zeboo-road {
+  to {
+    stroke-dashoffset: -112;
+  }
+}
+
+.zeboo-drift {
+  animation: zeboo-drift var(--pace) ease-in-out infinite alternate;
+}
+
+.zeboo-glow {
+  animation: zeboo-glow var(--pace) ease-in-out infinite alternate;
+}
+
+.zeboo-road {
+  animation: zeboo-road var(--pace) linear infinite;
+}
+
+/* a traveller who asked for less movement gets the same scene, still */
+@media (prefers-reduced-motion: reduce) {
+  .zeboo-drift,
+  .zeboo-glow,
+  .zeboo-road {
+    animation: none;
+  }
+}

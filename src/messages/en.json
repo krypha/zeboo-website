@@ -1,0 +1,184 @@
+{
+  "seo": {
+    "title": "Plan your trip to Madagascar, the budget follows",
+    "description": "Build your Madagascar itinerary stop by stop: lodging, meals, transport and activities. The budget is recounted with every choice, in total and per person.",
+    "imageAlt": "Zeboo. Compose your trip, the budget follows. The RN7 trail, from Antananarivo to Ranohira."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page does not exist."
+  },
+  "appearance": {
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "Match the system"
+  },
+  "nav": {
+    "budget": "The budget",
+    "compose": "Compose",
+    "discover": "Discover",
+    "questions": "Questions",
+    "login": "Sign in",
+    "register": "Sign up",
+    "skip": "Skip to content"
+  },
+  "locale": {
+    "label": "Language",
+    "fr": "Français",
+    "en": "English"
+  },
+  "footer": {
+    "mantra": "mora mora, gently.",
+    "rights": "Zeboo, an independent trip planner for Madagascar.",
+    "languages": "Languages"
+  },
+  "landing": {
+    "hero": {
+      "mantra": "mora mora",
+      "title": "Compose your trip.",
+      "titleSecond": "The budget follows.",
+      "lead": "Zeboo assembles your Madagascar itinerary, stop by stop, and recounts the spend at every choice. In total, and per person.",
+      "download": "Get it for Android",
+      "start": "Start on the web"
+    },
+    "figures": {
+      "places": "places listed",
+      "towns": "reference towns",
+      "regions": "regions covered",
+      "circuit": "the first circuit"
+    },
+    "steps": {
+      "eyebrow": "In three moves",
+      "title": "From the idea to the road,",
+      "titleSecond": "without a spreadsheet.",
+      "lead": "There is nothing to learn. You search, you add, you go.",
+      "oneTitle": "Find a place",
+      "oneBody": "Filter by type, by region, by town, or let Zeboo show you what is near you.",
+      "twoTitle": "Set your stops",
+      "twoBody": "A town, a number of nights, and under it the hotel, the table, the activity. The days count themselves.",
+      "threeTitle": "Go",
+      "threeBody": "Your circuit, its budget and its road follow you on the track, even when the network leaves."
+    },
+    "budget": {
+      "eyebrow": "The living budget",
+      "title": "The total climbs.",
+      "titleSecond": "The share falls.",
+      "lead": "This is the heart of Zeboo. Change the number of travellers and watch both figures answer: the room and the vehicle are shared, the meal and the entry are bought per head.",
+      "once": "The division happens once, at the end, so the share never drifts from the total it came from.",
+      "indicative": "Indicative brackets, never firm prices",
+      "scenario": "RN7, 5 nights",
+      "party": "{count, plural, one {# traveller} other {# travellers}}",
+      "fewer": "One traveller fewer",
+      "more": "One traveller more",
+      "lodging": "Lodging",
+      "lodgingNote": "{nights, plural, one {# night, shared} other {# nights, shared}}",
+      "meals": "Meals",
+      "mealsNote": "{meals, plural, one {# meal, per person} other {# meals, per person}}",
+      "entry": "Isalo park",
+      "entryNote": "One entry, per person",
+      "fuel": "Fuel",
+      "fuelNote": "{km} km of road, shared",
+      "total": "Total",
+      "perPerson": "Per person"
+    },
+    "compose": {
+      "eyebrow": "Compose",
+      "title": "A stop, its nights,",
+      "titleSecond": "and what you do there.",
+      "lead": "You pick the towns you sleep in. Zeboo works out the days, traces the road between them, and counts what you set down.",
+      "dayRange": "Day {from} to {to}",
+      "day": "Day {from}",
+      "nights": "{count, plural, one {# night} other {# nights}}"
+    },
+    "discover": {
+      "eyebrow": "Discover",
+      "title": "Madagascar,",
+      "titleSecond": "place by place.",
+      "lead": "Stays, tables, activities, campsites, rentals and guides. Every listing carries its price bracket and its position on the map.",
+      "allTypes": "Every type",
+      "nearby": "Nearby"
+    },
+    "transport": {
+      "eyebrow": "Transport",
+      "title": "Three ways to move,",
+      "titleSecond": "three ways to count.",
+      "ownTitle": "My own vehicle",
+      "ownBody": "Give your consumption. Zeboo takes the distance by road, not as the crow flies, and draws the fuel from it.",
+      "carrierTitle": "Taxi-brousse",
+      "carrierBody": "The companies serving your line first. Every fare carries its source and its date.",
+      "rentalTitle": "Rental with a driver",
+      "rentalBody": "The norm in Madagascar. The renter's daily rate, shared between you."
+    },
+    "road": {
+      "eyebrow": "On the road",
+      "title": "The map comes down",
+      "titleSecond": "to your level.",
+      "lead": "Press Navigate and the screen changes trade: the map tilts, turns the way you are heading, and an arrow says where you are going.",
+      "pointOne": "The manoeuvre ahead, and how far off it is.",
+      "pointTwo": "What is left in kilometres and in order of magnitude, never an arrival time promised.",
+      "pointThree": "Out in the bush, the itinerary, the distances and the budget stay readable.",
+      "manoeuvreDistance": "in 450 m",
+      "manoeuvre": "Turn right onto the RN 7",
+      "remaining": "{km} km",
+      "towards": "Towards Isalo · about 11 h"
+    },
+    "doors": {
+      "agencyTitle": "Would rather not organise it all?",
+      "agencyBody": "Agencies publish their ready made circuits, at the firm price they announce. You start from there and adjust it, or you take it as it is.",
+      "providerTitle": "Do you make the trip happen?",
+      "providerBody": "Hotel, table, guide, renter: publish your listing, set your point on the map, and receive travellers' enquiries directly.",
+      "providerAction": "Create a professional account"
+    },
+    "promises": {
+      "eyebrow": "What will not move",
+      "title": "Four promises",
+      "titleSecond": "we keep.",
+      "oneTitle": "Brackets, not promises",
+      "oneBody": "A posted tariff is an indication for that kind of service in that region. Only an agency circuit's price is firm.",
+      "twoTitle": "The badge is earned",
+      "twoBody": "A provider does not declare itself verified. An administrator checks the listing before it goes public.",
+      "threeTitle": "Your details stay yours",
+      "threeBody": "Neither number nor address is exposed. Putting people in touch happens inside Zeboo.",
+      "fourTitle": "Data we stand behind",
+      "fourBody": "Nothing is scraped from anywhere. Open data, official sites, and entry by hand, with the source and the date."
+    },
+    "questions": {
+      "eyebrow": "Questions",
+      "title": "What we get asked",
+      "titleSecond": "most.",
+      "oneQ": "Are the posted prices firm?",
+      "oneA": "No. They are indicative brackets, meant to give you an order of magnitude before you leave. Only the price of a circuit offered by an agency is a firm price, announced by them.",
+      "twoQ": "How are distances worked out?",
+      "twoA": "By the road that can actually be driven, not as the crow flies. Between Antsirabe and Ranohira that is 523 km of tarmac against 343 in a straight line, and it is the first figure that counts for your fuel.",
+      "threeQ": "Does it work without a network?",
+      "threeA": "Your itinerary, your distances and your budget stay readable when the connection leaves. The map tiles, though, need to have been loaded.",
+      "fourQ": "Who checks the providers?",
+      "fourA": "The verified badge is granted by an administrator, never self declared.",
+      "fiveQ": "And on iPhone?",
+      "fiveA": "The Android version comes out first. The iPhone follows."
+    },
+    "download": {
+      "eyebrow": "Take Zeboo with you",
+      "title": "Ready for the RN7.",
+      "lead": "Compose your trip tonight, leave tomorrow, and keep the budget in sight all the way.",
+      "android": "Download",
+      "androidNote": "for Android",
+      "androidSoon": "coming to the Play Store",
+      "ios": "iPhone",
+      "iosNote": "coming soon",
+      "web": "Or start on the web",
+      "webAction": "Create an account",
+      "webSignIn": "I already have an account",
+      "androidBuild": "version {version} · {size} MB",
+      "androidUnknownSource": "The file comes from Zeboo and not from the Play Store: when you open it, Android will ask you to allow installing from this source. It is a one time switch."
+    }
+  },
+  "error": {
+    "title": "Something gave way",
+    "body": "Zeboo could not show this page. You can try again, or go back home.",
+    "retry": "Try again",
+    "home": "Back home",
+    "reference": "Reference {digest}"
+  }
+}

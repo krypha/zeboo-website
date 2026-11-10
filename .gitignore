@@ -1,0 +1,48 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+.pnpm-debug.log*
+
+# env files: only the example is tracked
+.env*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# playwright
+/playwright-report/
+/test-results/
+/blob-report/
+/playwright/.cache/
+
+# the android build the site hands out: tens of megabytes per version, posted at deploy time
+/public/app/*
+!/public/app/.gitkeep
+
+# CI artifacts
+/.pnpm-store
+junit-*.xml
+
+# written by next dev on every run
+AGENTS.md
+CLAUDE.md

@@ -1,0 +1,184 @@
+{
+  "seo": {
+    "title": "Composez votre voyage à Madagascar, le budget suit",
+    "description": "Composez votre itinéraire à Madagascar, étape par étape : hébergement, repas, transport et activités. Le budget se recalcule à chaque choix, au total et par personne.",
+    "imageAlt": "Zeboo. Composez votre voyage, le budget suit. Le tracé de la RN7, d’Antananarivo à Ranohira."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Cette page n’existe pas."
+  },
+  "appearance": {
+    "label": "Apparence",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Comme le système"
+  },
+  "nav": {
+    "budget": "Le budget",
+    "compose": "Composer",
+    "discover": "Découvrir",
+    "questions": "Questions",
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "skip": "Aller au contenu"
+  },
+  "locale": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "English"
+  },
+  "footer": {
+    "mantra": "mora mora, tranquillement.",
+    "rights": "Zeboo, un planificateur indépendant pour Madagascar.",
+    "languages": "Langues"
+  },
+  "landing": {
+    "hero": {
+      "mantra": "mora mora",
+      "title": "Composez votre voyage.",
+      "titleSecond": "Le budget suit.",
+      "lead": "Zeboo assemble votre itinéraire à Madagascar, arrêt par arrêt, et recalcule la dépense à chaque choix. Au total, et par personne.",
+      "download": "Télécharger pour Android",
+      "start": "Commencer sur le web"
+    },
+    "figures": {
+      "places": "lieux répertoriés",
+      "towns": "villes de référence",
+      "regions": "régions couvertes",
+      "circuit": "le premier circuit"
+    },
+    "steps": {
+      "eyebrow": "En trois gestes",
+      "title": "De l’envie au départ,",
+      "titleSecond": "sans tableur.",
+      "lead": "Vous n’avez rien à apprendre. Vous cherchez, vous ajoutez, vous partez.",
+      "oneTitle": "Cherchez un lieu",
+      "oneBody": "Filtrez par type, par région, par ville, ou laissez Zeboo vous montrer ce qui est près de vous.",
+      "twoTitle": "Posez vos arrêts",
+      "twoBody": "Une ville, un nombre de nuits, et dessous l’hôtel, la table, l’activité. Les jours se comptent tout seuls.",
+      "threeTitle": "Partez",
+      "threeBody": "Votre circuit, son budget et sa route vous suivent sur la piste, même quand le réseau s’en va."
+    },
+    "budget": {
+      "eyebrow": "Le budget vivant",
+      "title": "Le total monte.",
+      "titleSecond": "La part baisse.",
+      "lead": "C’est le cœur de Zeboo. Changez le nombre de voyageurs et regardez les deux chiffres répondre : la chambre et le véhicule se partagent, le repas et l’entrée se paient par tête.",
+      "once": "La division se fait une seule fois, à la fin, pour que la part ne s’éloigne jamais du total dont elle vient.",
+      "indicative": "Des fourchettes indicatives, jamais des prix fermes",
+      "scenario": "RN7, 5 nuits",
+      "party": "{count, plural, one {# voyageur} other {# voyageurs}}",
+      "fewer": "Un voyageur de moins",
+      "more": "Un voyageur de plus",
+      "lodging": "Hébergement",
+      "lodgingNote": "{nights, plural, one {# nuit, partagée} other {# nuits, partagées}}",
+      "meals": "Repas",
+      "mealsNote": "{meals, plural, one {# repas, par personne} other {# repas, par personne}}",
+      "entry": "Parc de l’Isalo",
+      "entryNote": "Une entrée, par personne",
+      "fuel": "Carburant",
+      "fuelNote": "{km} km de route, partagés",
+      "total": "Total",
+      "perPerson": "Par personne"
+    },
+    "compose": {
+      "eyebrow": "Composer",
+      "title": "Un arrêt, des nuits,",
+      "titleSecond": "et ce que vous y faites.",
+      "lead": "Vous choisissez les villes où vous dormez. Zeboo en déduit les jours, trace la route entre elles, et compte ce que vous y posez.",
+      "dayRange": "Jour {from} à {to}",
+      "day": "Jour {from}",
+      "nights": "{count, plural, one {# nuit} other {# nuits}}"
+    },
+    "discover": {
+      "eyebrow": "Découvrir",
+      "title": "Madagascar,",
+      "titleSecond": "lieu par lieu.",
+      "lead": "Hébergements, tables, activités, campings, loueurs et guides. Chaque fiche porte sa fourchette de prix et sa position sur la carte.",
+      "allTypes": "Tous les types",
+      "nearby": "À proximité"
+    },
+    "transport": {
+      "eyebrow": "Le transport",
+      "title": "Trois façons d’avancer,",
+      "titleSecond": "trois façons de compter.",
+      "ownTitle": "Mon véhicule",
+      "ownBody": "Donnez votre consommation. Zeboo prend la distance par la route, pas à vol d’oiseau, et en tire le carburant.",
+      "carrierTitle": "Taxi-brousse",
+      "carrierBody": "Les compagnies qui desservent votre ligne en premier. Chaque tarif porte sa source et sa date.",
+      "rentalTitle": "Location avec chauffeur",
+      "rentalBody": "La norme à Madagascar. Le tarif journalier du loueur, partagé entre vous."
+    },
+    "road": {
+      "eyebrow": "Sur la route",
+      "title": "La carte se met",
+      "titleSecond": "à votre hauteur.",
+      "lead": "Appuyez sur Naviguer et l’écran change de métier : la carte s’incline, tourne dans le sens de votre marche, et une flèche dit où vous allez.",
+      "pointOne": "La manœuvre à venir, et à quelle distance.",
+      "pointTwo": "Ce qui reste en kilomètres et en ordre de grandeur, jamais une heure d’arrivée promise.",
+      "pointThree": "En brousse, l’itinéraire, les distances et le budget restent lisibles.",
+      "manoeuvreDistance": "dans 450 m",
+      "manoeuvre": "Tournez à droite sur la RN 7",
+      "remaining": "{km} km",
+      "towards": "Vers l’Isalo · environ 11 h"
+    },
+    "doors": {
+      "agencyTitle": "Pas envie de tout organiser ?",
+      "agencyBody": "Les agences publient leurs circuits clés en main, au prix ferme qu’elles annoncent. Vous partez de là et vous l’ajustez, ou vous le prenez tel quel.",
+      "providerTitle": "Vous faites vivre le voyage ?",
+      "providerBody": "Hôtel, table, guide, loueur : publiez votre fiche, posez votre point sur la carte, et recevez les demandes des voyageurs directement.",
+      "providerAction": "Créer un compte professionnel"
+    },
+    "promises": {
+      "eyebrow": "Ce qui ne bougera pas",
+      "title": "Quatre promesses",
+      "titleSecond": "qu’on tient.",
+      "oneTitle": "Des fourchettes, pas des promesses",
+      "oneBody": "Un tarif affiché est une indication pour ce type de service dans cette région. Seul le prix d’un circuit d’agence est ferme.",
+      "twoTitle": "Le badge se mérite",
+      "twoBody": "Un prestataire ne se déclare pas vérifié. Un administrateur contrôle la fiche avant qu’elle devienne publique.",
+      "threeTitle": "Vos coordonnées restent à vous",
+      "threeBody": "Ni numéro ni adresse ne sont exposés. La mise en relation se fait dans Zeboo.",
+      "fourTitle": "Des données qu’on assume",
+      "fourBody": "Rien n’est aspiré ailleurs. Données ouvertes, sites officiels, et saisie à la main, avec la source et la date."
+    },
+    "questions": {
+      "eyebrow": "Questions",
+      "title": "Ce qu’on nous demande",
+      "titleSecond": "souvent.",
+      "oneQ": "Les prix affichés sont-ils fermes ?",
+      "oneA": "Non. Ce sont des fourchettes indicatives, pensées pour vous donner un ordre de grandeur avant de partir. Seul le prix d’un circuit proposé par une agence est un prix ferme, annoncé par elle.",
+      "twoQ": "Comment les distances sont-elles calculées ?",
+      "twoA": "Par la route réellement praticable, pas à vol d’oiseau. Entre Antsirabe et Ranohira cela fait 523 km de bitume contre 343 en ligne droite, et c’est le premier chiffre qui compte pour votre carburant.",
+      "threeQ": "Est-ce que ça marche sans réseau ?",
+      "threeA": "Votre itinéraire, vos distances et votre budget restent lisibles quand la connexion s’en va. Les fonds de carte, eux, ont besoin d’avoir été chargés.",
+      "fourQ": "Qui vérifie les prestataires ?",
+      "fourA": "Le badge vérifié est accordé par un administrateur, jamais auto-déclaré.",
+      "fiveQ": "Et sur iPhone ?",
+      "fiveA": "La version Android est la première à sortir. L’iPhone suit."
+    },
+    "download": {
+      "eyebrow": "Emporter Zeboo",
+      "title": "Prêt pour la RN7.",
+      "lead": "Composez votre voyage ce soir, partez demain, et gardez le budget sous les yeux tout du long.",
+      "android": "Télécharger",
+      "androidNote": "pour Android",
+      "androidSoon": "bientôt sur le Play Store",
+      "ios": "iPhone",
+      "iosNote": "bientôt disponible",
+      "web": "Ou commencez sur le web",
+      "webAction": "Créer un compte",
+      "webSignIn": "J’ai déjà un compte",
+      "androidBuild": "version {version} · {size} Mo",
+      "androidUnknownSource": "Le fichier vient de Zeboo et non du Play Store : à l’ouverture, Android vous demandera d’autoriser l’installation depuis cette source. C’est une case à cocher une fois."
+    }
+  },
+  "error": {
+    "title": "Quelque chose n’a pas tenu",
+    "body": "Zeboo n’a pas pu afficher cette page. Vous pouvez réessayer, ou revenir à l’accueil.",
+    "retry": "Réessayer",
+    "home": "Revenir à l’accueil",
+    "reference": "Référence {digest}"
+  }
+}
